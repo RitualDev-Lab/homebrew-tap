@@ -1,0 +1,64 @@
+name: Homebrew Formula Autoupdater Bot
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-formulae:
+    name: Check & Auto-Update Homebrew Formulae
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Tap Repository
+        uses: actions/checkout@v4
+
+      - name: Update AgentShield Formula
+        id: update-agentshield
+        run: |
+          set -e
+          echo "Checking npm registry for @ritualdev-lab/agentshield..."
+          NPM_INFO=$(curl -fsSL https://registry.npmjs.org/@ritualdev-lab/agentshield/latest)
+          LATEST_VER=$(echo "$NPM_INFO" | jq -r '.version')
+          TARBALL_URL=$(echo "$NPM_INFO" | jq -r '.dist.tarball')
+
+          if [ -z "$LATEST_VER" ] || [ "$LATEST_VER" = "null" ]; then
+            echo "Error: Unable to fetch latest version from npm"
+            exit 1
+          fi
+
+          echo "Latest npm version: $LATEST_VER"
+          echo "Tarball URL: $TARBALL_URL"
+
+          FORMULA="Formula/agentshield.rb"
+          CURRENT_VER=$(grep -E 'url "https://registry.npmjs.org/@ritualdev-lab/agentshield/-/agentshield-.*\.tgz"' "$FORMULA" | sed -E 's/.*agentshield-(.*)\.tgz.*/\1/')
+          echo "Current Formula version: $CURRENT_VER"
+
+          if [ "$LATEST_VER" != "$CURRENT_VER" ]; then
+            echo "New version detected ($CURRENT_VER -> $LATEST_VER)! Computing sha256..."
+            SHA256=$(curl -fsSL "$TARBALL_URL" | sha256sum | awk '{print $1}')
+            echo "New SHA-256: $SHA256"
+
+            sed -i "s|url \".*\"|url \"$TARBALL_URL\"|g" "$FORMULA"
+            sed -i "s|sha256 \".*\"|sha256 \"$SHA256\"|g" "$FORMULA"
+            sed -i "s|assert_match \".*\",|assert_match \"$LATEST_VER\",|g" "$FORMULA"
+
+            echo "updated=true" >> $GITHUB_OUTPUT
+            echo "version=$LATEST_VER" >> $GITHUB_OUTPUT
+          else
+            echo "Formula is already up to date at version $CURRENT_VER."
+            echo "updated=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit & Push Update
+        if: steps.update-agentshield.outputs.updated == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Formula/agentshield.rb
+          git commit -m "chore(autoupdate): bump agentshield to v${{ steps.update-agentshield.outputs.version }}"
+          git push origin main
