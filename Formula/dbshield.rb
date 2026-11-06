@@ -2,9 +2,9 @@ require "language/node"
 
 class Dbshield < Formula
   desc "Database Guardrail, Sandboxing Wire Proxy & Virtual Schema RBAC"
-  homepage "https://github.com/RitualDev-Lab/DBShield"
-  url "https://registry.npmjs.org/@ritualdev-lab/dbshield/-/dbshield-0.2.0.tgz"
-  sha256 "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  homepage "https://ritualdev.in/dbshield/"
+  url "https://github.com/RitualDev-Lab/DBShield/archive/refs/tags/v0.2.0.tar.gz"
+  sha256 "085107b513eb86e94b9defa972c1dc651b3a03941538b441266d005695351fd6"
   license "MIT"
 
   depends_on "node"
