@@ -3,9 +3,9 @@ require "language/node"
 class Mockforge < Formula
   desc "Enterprise Intelligent Relational Mock DB & Synthetic Test Data Engine"
   homepage "https://ritualdev.in/mockforge"
-  url "https://github.com/RitualDev-Lab/MockForge/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "267b08ceace1a14c5a893811e8786ef04130ba7b3932d7a6b47eef3b55f132ef"
-  license "MIT"
+  url "https://registry.npmjs.org/@ritualdev-lab/mockforge/-/mockforge-0.1.2.tgz"
+  sha256 "b23b9ecd8b51d702767b3a870056c054ac2f602fe8408b97437a93ee17997332"
+  license "Apache-2.0"
 
   depends_on "node"
 

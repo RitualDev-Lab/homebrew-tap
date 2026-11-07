@@ -1,11 +1,11 @@
 require "language/node"
 
 class Fineprint < Formula
-  desc "Enterprise In-Memory Contract, Lease & NDA Scanner with Gemini 1.5 Flash"
+  desc "Enterprise In-Memory Contract, Lease & NDA Scanner ($0 Cost Stack)"
   homepage "https://ritualdev.in/fineprint"
-  url "https://github.com/RitualDev-Lab/FinePrintAI/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "96cdd6a1551205eff5e3514a1caaf080627fbe5124e5e1673543f84ebeed8e3a"
-  license "MIT"
+  url "https://registry.npmjs.org/@ritualdev-lab/fineprint/-/fineprint-0.1.3.tgz"
+  sha256 "e0532a800a185eb04e025f97cd42788737caf646ed826cfea93749f8b544fd91"
+  license "Apache-2.0"
 
   depends_on "node"
 
