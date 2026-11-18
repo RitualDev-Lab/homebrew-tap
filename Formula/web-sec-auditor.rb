@@ -4,7 +4,7 @@ class WebSecAuditor < Formula
   desc "Enterprise DAST, SAST, SCA & AI Secret Hunter with Automated Git Auto-Patches"
   homepage "https://github.com/RitualDev-Lab/web-sec-auditor"
   url "https://registry.npmjs.org/@ritualdev-lab/web-sec-auditor/-/web-sec-auditor-1.1.0.tgz"
-  sha256 "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  sha256 "e34fe9ae3c818ecf0f14f7095019b5ced13d9ae1754209d96918a5327b914c75"
   license "MIT"
 
   depends_on "node"
